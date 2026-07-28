@@ -1,20 +1,61 @@
-# FinEdu Loan Core Platform
+# FinEdu Loan Platform
 
-助学贷款核心业务平台 DevOps/SRE 实战项目
+## 项目名称
 
-## 项目目标
+金融助学贷款核心业务平台 DevOps 实战项目
 
-模拟金融机构助学贷款核心业务平台，从传统 Linux 运维逐步演进到云原生平台。
 
-## 当前阶段
+## 项目背景
 
-Sprint 0：项目初始化
+模拟银行助学贷款业务系统。
 
-## 当前进度
+业务流程：
 
-- [x] Ubuntu Server 安装
-- [x] SSH 配置
-- [x] NAT 网络配置
-- [ ] 基础工具安装
-- [ ] 主机初始化
-- [ ] Ansible 环境
+学生申请贷款
+        ↓
+贷款审核
+        ↓
+贷款发放
+        ↓
+学生还款
+        ↓
+逾期催收
+
+
+## 技术栈
+
+### 基础设施
+
+- Ubuntu Server 22.04
+- VMware
+- Linux
+
+
+### 自动化
+
+- Git
+- Ansible
+- Jenkins
+
+
+### 容器化
+
+- Docker
+- Kubernetes/K3s
+
+
+### 监控
+
+- Prometheus
+- Grafana
+- ELK
+
+
+## 环境规划
+
+|节点|IP|用途|
+|-|-|-|
+|bastion|192.168.31.100|堡垒机|
+|app01|192.168.31.200|业务服务|
+|db01|192.168.31.210|数据库|
+|monitor01|192.168.31.220|监控|
