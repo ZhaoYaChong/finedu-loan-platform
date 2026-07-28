@@ -1,0 +1,36 @@
+---
+- name: FinEdu Loan Platform Infrastructure System Health Check
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: 1. Display Node System Information
+      debug:
+        msg:
+          - "Host: {{ inventory_hostname }} ({{ ansible_default_ipv4.address }})"
+          - "OS: {{ ansible_distribution }} {{ ansible_distribution_version }}"
+          - "Kernel: {{ ansible_kernel }}"
+          - "Uptime: {{ (ansible_uptime_seconds / 3600) | round(2) }} hours"
+
+    - name: 2. Check Memory Usage
+      debug:
+        msg: "Total Mem: {{ ansible_memtotal_mb }} MB, Free Mem: {{ ansible_memfree_mb }} MB"
+
+    - name: 3. Check Root Disk Space Usage
+      debug:
+        msg: "Root Device: {{ item.mount }}, Available: {{ (item.size_available / 1024 / 1024 / 1024) | round(2) }} GB"
+      loop: "{{ ansible_mounts }}"
+      when: item.mount == '/'
+
+    - name: 4. Check Key Services Status
+      systemd:
+        name: "{{ service_name }}"
+      register: service_info
+      ignore_errors: yes
+      vars:
+        service_name: "{{ 'docker' if inventory_hostname == 'app01' else ('mysql' if inventory_hostname == 'db01' else 'ssh') }}"
+
+    - name: 5. Output Service Status Report
+      debug:
+        msg: "Target Service [{{ service_name }}] Active State: {{ service_info.status.ActiveState | default('UNKNOWN') }}"
+      vars:
+        service_name: "{{ 'docker' if inventory_hostname == 'app01' else ('mysql' if inventory_hostname == 'db01' else 'ssh') }}"

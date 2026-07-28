@@ -1,0 +1,19 @@
+# FinEdu Loan Platform Cluster Inventory
+
+[app]
+app01 ansible_host=192.168.31.200
+
+[database]
+db01 ansible_host=192.168.31.210
+
+[monitor]
+monitor01 ansible_host=192.168.31.220
+
+[cluster:children]
+app
+database
+monitor
+
+[all:vars]
+ansible_user=ops
+ansible_python_interpreter=/usr/bin/python3
