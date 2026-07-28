@@ -1,0 +1,20 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: finedu-loan-service
+  datasource:
+    url: jdbc:mysql://192.168.31.210:3306/finedu_loan?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=utf8
+    username: finedu_app
+    password: FinEduLoan@2026
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
